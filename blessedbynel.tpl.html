@@ -1,0 +1,742 @@
+<title>blessedbynel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Pinyon+Script&family=Manrope:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: one white "flyer" sheet centered on a pale grey backdrop, read top to bottom:
+   welcome + logo, meet Nel, policy cards, prep checklist, recent work, then the service list and booking. */
+:root {
+  --logo: url("{{logo}}");
+  --backdrop: #E8E8E8;
+  --paper: #FFFFFF;
+  --ink: #0A0A0A;
+  --muted: #5C5C5C;
+  --line: #D6D6D6;
+  --soft: #F4F4F4;
+  --hero-bg: #111111;
+  --hl: #FFFFFF;
+  --hl-text: #FFFFFF;
+  --hl-line: rgba(255, 255, 255, .35);
+  --veil: rgba(255, 255, 255, .9);
+  --danger: #B3261E;
+  --script: "Pinyon Script", "Snell Roundhand", "Segoe Script", cursive;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --backdrop: #000000; --paper: #111111; --ink: #F2F2F2; --muted: #A3A3A3; --line: #2E2E2E; --soft: #1A1A1A;
+    --hero-bg: #111111; --hl: #FFFFFF; --hl-text: #FFFFFF; --hl-line: rgba(255, 255, 255, .35);
+    --veil: rgba(17, 17, 17, .9); --danger: #F2867D;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --backdrop: #000000; --paper: #111111; --ink: #F2F2F2; --muted: #A3A3A3; --line: #2E2E2E; --soft: #1A1A1A;
+    --hero-bg: #111111; --hl: #FFFFFF; --hl-text: #FFFFFF; --hl-line: rgba(255, 255, 255, .35);
+  --veil: rgba(17, 17, 17, .9); --danger: #F2867D;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink); font: 400 15px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+}
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
+
+.sheet { background: var(--paper); overflow: hidden; }
+/* Full-bleed bands: backgrounds run edge to edge, content stays within a 1240px measure. */
+.sec {
+  padding-block: clamp(48px, 7vw, 96px);
+  padding-left: max(20px, env(safe-area-inset-left, 0px), calc((100% - 1240px) / 2));
+  padding-right: max(20px, env(safe-area-inset-right, 0px), calc((100% - 1240px) / 2));
+}
+.band { background: var(--soft); }
+.band .card { background: var(--paper); }
+.caps { font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .38em; color: var(--ink); }
+.wide { letter-spacing: .55em; font-size: .82rem; font-weight: 600; }
+.rule { width: min(240px, 60%); height: 1px; background: var(--ink); margin: 0 auto 14px; }
+.script { font-family: var(--script); font-weight: 400; line-height: 1.05; margin: 0; }
+.center { text-align: center; }
+
+/* 1. Welcome */
+.welcome { display: grid; justify-items: center; gap: 22px; text-align: center; padding-bottom: clamp(24px, 4vw, 40px); }
+.badge { width: clamp(180px, 34vw, 232px); aspect-ratio: 1; border-radius: 50%; background: var(--logo) center / cover; box-shadow: 0 24px 44px -26px rgba(0, 0, 0, .6); }
+.where { font-size: .7rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+
+/* 2. Meet Nel */
+.meet { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(28px, 6vw, 56px); align-items: center; }
+@media (max-width: 620px) { .meet { grid-template-columns: minmax(0, 1fr); } }
+.frame { margin: 0 auto; width: 100%; max-width: 300px; justify-self: center; display: grid; justify-items: center; gap: 12px; }
+.frame .mat { width: 100%; padding: 10px; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); }
+.frame img { display: block; width: 100%; max-width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center; border-radius: 50%; }
+.frame figcaption { font-size: .62rem; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); text-align: center; }
+.hello { display: grid; gap: 14px; text-align: center; }
+.hello .script { font-size: clamp(3rem, 2rem + 4vw, 4.4rem); }
+.hello p { margin: 0 auto; color: var(--muted); max-width: 40ch; }
+.btn { justify-self: center; height: 46px; padding: 0 28px; border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--paper); font-size: .74rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; transition: background-color .2s, color .2s; }
+.btn:hover { background: transparent; color: var(--ink); }
+.btn.line { background: transparent; color: var(--ink); }
+.btn.line:hover { background: var(--ink); color: var(--paper); }
+
+/* 3. Policies */
+.titled { display: grid; justify-items: center; text-align: center; margin-bottom: 30px; }
+.titled .script { font-size: clamp(3rem, 2rem + 4.5vw, 4.6rem); margin-top: 4px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 700px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { display: grid; justify-items: center; align-content: start; gap: 8px; padding: 20px 12px 18px; border: 1px solid var(--ink); text-align: center; }
+.card svg { width: 40px; height: 40px; fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { margin: 0; font-size: .95rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.card p { margin: 0; font-size: .78rem; line-height: 1.5; color: var(--muted); }
+.card b { color: var(--ink); font-weight: 600; }
+
+/* 4. Prepare */
+.prepare h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 1.8rem + 2.6vw, 3.4rem); line-height: 1; margin: 0 0 32px; text-align: center; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 32px; }
+@media (max-width: 560px) { .checks { grid-template-columns: minmax(0, 1fr); } }
+.checks li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; line-height: 1.55; }
+.checks svg { width: 20px; height: 20px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
+
+/* 5. Recent work */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.shot { position: relative; margin: 0; overflow: hidden; background: var(--soft); aspect-ratio: 4 / 5; max-width: 100%; }
+.shot:first-child { grid-column: span 2; aspect-ratio: 16 / 11; }
+.shot:first-child img { object-position: center 30%; }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.shot:hover img { transform: scale(1.03); }
+.shot figcaption { position: absolute; inset: auto 0 0 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px; padding: 44px 14px 14px; background: linear-gradient(to top, rgba(0, 0, 0, .78), rgba(0, 0, 0, 0)); color: #FFFFFF; }
+.shot figcaption span { font-family: var(--display); font-size: 1.25rem; line-height: 1.1; }
+.shot button { height: 30px; padding: 0 12px; border: 1px solid rgba(255, 255, 255, .7); background: transparent; color: #FFFFFF; font-size: .66rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; transition: background-color .2s, color .2s; }
+.shot button:hover { background: #FFFFFF; color: #0A0A0A; }
+@media (max-width: 520px) { .shot figcaption { padding: 32px 10px 10px; } .shot figcaption span { font-size: 1.02rem; } }
+
+/* 6. Booking */
+.book { border-top: 1px solid var(--line); scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 12px); }
+.book h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 1.6rem + 1.6vw, 2.6rem); line-height: 1; margin: 6px 0 0; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 26px 0 8px; }
+.chip { height: 32px; padding: 0 14px; border: 1px solid var(--line); background: transparent; font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: all .2s; }
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.cat-name { margin: 28px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--ink); font-size: .7rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; }
+.svc { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.svc h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1.15; }
+.svc p { margin: 2px 0 0; font-size: .82rem; color: var(--muted); }
+.svc .meta { margin-top: 6px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); font-variant-numeric: tabular-nums; }
+.svc .btn { height: 38px; padding: 0 20px; font-size: .68rem; }
+@media (max-width: 460px) { .svc { grid-template-columns: minmax(0, 1fr); } .svc .btn { justify-self: start; margin-top: 8px; } }
+
+.back { border: 0; background: none; padding: 0; font-size: .7rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.back:hover { color: var(--ink); }
+.picked { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px 20px; margin: 18px 0 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.picked h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.9rem; line-height: 1.05; }
+.picked .meta { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.picked .meta b { color: var(--ink); font-weight: 600; }
+.label { display: block; font-size: .66rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.addons { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
+.addons .chip { letter-spacing: .08em; text-transform: none; font-size: .78rem; font-weight: 500; }
+
+.calhead { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.month { font-family: var(--display); font-size: 1.6rem; line-height: 1; margin-right: auto; }
+.nbtn { width: 34px; height: 34px; border: 1px solid var(--line); background: transparent; font-size: 15px; transition: border-color .2s; }
+.nbtn:hover:not(:disabled) { border-color: var(--ink); }
+.nbtn:disabled { opacity: .3; cursor: default; }
+.strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 7px; border: 1px solid transparent; background: transparent; color: var(--muted); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s, border-color .2s; }
+.day b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; line-height: 1.1; letter-spacing: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.day i { width: 4px; height: 4px; border-radius: 50%; background: var(--ink); opacity: var(--o, 1); }
+.day:disabled { opacity: .3; cursor: default; }
+.day:disabled i { visibility: hidden; }
+.day:hover:not(:disabled):not([aria-pressed="true"]) { border-color: var(--line); }
+.day[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.day[aria-pressed="true"] b { color: var(--paper); }
+.day[aria-pressed="true"] i { background: var(--paper); }
+.day.today b { text-decoration: underline 1px; text-underline-offset: 5px; }
+.dayline { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; margin: 22px 0 12px; font-size: .74rem; color: var(--muted); letter-spacing: .06em; }
+.dayline b { color: var(--ink); font-family: var(--display); font-weight: 400; font-size: 1.25rem; letter-spacing: 0; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; min-height: 96px; align-content: start; }
+@media (prefers-reduced-motion: no-preference) { .slots, .panel { animation: rise .3s var(--ease) both; } }
+@keyframes rise { from { opacity: 0; transform: translateY(4px); } }
+.slot { position: relative; height: 44px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font-size: .85rem; font-weight: 500; font-variant-numeric: tabular-nums; transition: background-color .2s, color .2s; }
+.slot.open {
+  -webkit-mask: radial-gradient(circle 4px at 0 50%, transparent 94%, #000 100%) left/51% 100% no-repeat, radial-gradient(circle 4px at 100% 50%, transparent 94%, #000 100%) right/51% 100% no-repeat;
+  mask: radial-gradient(circle 4px at 0 50%, transparent 94%, #000 100%) left/51% 100% no-repeat, radial-gradient(circle 4px at 100% 50%, transparent 94%, #000 100%) right/51% 100% no-repeat;
+}
+.slot.open:hover, .slot.open:focus-visible { background: var(--ink); color: var(--paper); outline: none; }
+.slot.taken { border-style: dashed; border-color: var(--line); color: var(--muted); text-decoration: line-through; cursor: not-allowed; }
+.none { display: grid; gap: 14px; justify-items: center; padding: 30px 10px; text-align: center; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 16px; font-size: .7rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 10px; border: 1px solid var(--ink); }
+.legend i.t { border-style: dashed; border-color: var(--line); }
+
+/* Confirm form + ticket */
+.panel { border: 1px solid var(--ink); background: var(--paper); max-width: 520px; margin: 20px auto 0; }
+.form { padding: 24px; }
+.ctop { display: flex; align-items: flex-start; gap: 12px; }
+.when { flex: 1; min-width: 0; }
+.when small { display: block; font-size: .66rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.when strong { display: block; margin-top: 6px; font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1.1; }
+.when em { display: block; font-style: normal; margin-top: 4px; font-size: .85rem; color: var(--muted); }
+.x { flex: none; width: 32px; height: 32px; border: 1px solid var(--line); background: transparent; font-size: 17px; line-height: 1; }
+.fields { display: grid; gap: 14px; margin-top: 20px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.field label { display: block; font-size: .66rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 6px; }
+.field label span { font-weight: 400; letter-spacing: .06em; text-transform: none; color: var(--muted); }
+.field input, .field textarea { display: block; width: 100%; border: 1px solid var(--line); border-radius: 0; background: var(--soft); padding: 10px 12px; font-size: .92rem; color: var(--ink); outline: none; resize: none; transition: border-color .2s, background-color .2s; }
+.field input:focus, .field textarea:focus { border-color: var(--ink); background: var(--paper); }
+.field.bad input { border-color: var(--danger); }
+.err { display: block; margin-top: 5px; font-size: .8rem; color: var(--danger); }
+.err:empty { display: none; }
+.agree { display: flex; gap: 10px; align-items: flex-start; font-size: .8rem; color: var(--muted); cursor: pointer; }
+.agree input { width: 17px; height: 17px; margin-top: 1px; flex: none; accent-color: var(--ink); }
+.sum { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: .82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sum b { color: var(--ink); }
+.acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.acts .btn { flex: 1; justify-self: auto; }
+.shake { animation: shake .32s cubic-bezier(.36, .07, .19, .97); }
+@keyframes shake { 25% { transform: translateX(-5px); } 50% { transform: translateX(4px); } 75% { transform: translateX(-2px); } }
+
+.ticket { display: grid; grid-template-columns: 100px minmax(0, 1fr); border: 0;
+  -webkit-mask: radial-gradient(circle 10px at 100px 0, transparent 97%, #000 100%) top/100% 51% no-repeat, radial-gradient(circle 10px at 100px 100%, transparent 97%, #000 100%) bottom/100% 51% no-repeat;
+  mask: radial-gradient(circle 10px at 100px 0, transparent 97%, #000 100%) top/100% 51% no-repeat, radial-gradient(circle 10px at 100px 100%, transparent 97%, #000 100%) bottom/100% 51% no-repeat; }
+.stub { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 22px 8px; background: var(--ink); color: var(--paper); border-right: 1.5px dashed var(--paper); }
+.stub small { font-size: .62rem; font-weight: 600; letter-spacing: .24em; }
+.stub strong { font-family: var(--display); font-weight: 400; font-size: 3.3rem; line-height: 1; }
+.tbody { position: relative; padding: 22px 20px 20px; background: var(--soft); }
+.tbody h3 { margin: 0; padding-right: 70px; font-family: var(--script); font-weight: 400; font-size: 2.4rem; line-height: 1.05; }
+.tbody p { margin: 8px 0 0; font-size: .85rem; line-height: 1.55; color: var(--muted); }
+.tbody p b { color: var(--ink); font-weight: 600; }
+.code { font-weight: 700; letter-spacing: .1em; color: var(--ink); }
+.press { position: absolute; right: 10px; top: 10px; width: 72px; height: 72px; color: var(--ink); opacity: .55; transform: rotate(-10deg); pointer-events: none; }
+.tbody .acts .btn { flex: none; height: 38px; padding: 0 16px; font-size: .64rem; }
+
+.foot { padding: 22px clamp(20px, 7vw, 64px) 28px; border-top: 1px solid var(--line); text-align: center; font-size: .72rem; color: var(--muted); }
+.foot .script { font-size: 1.9rem; color: var(--ink); margin-bottom: 4px; }
+
+/* Flair: ornaments, glitter, ribbon, framed photos */
+.orn { display: block; width: min(240px, 70%); height: 24px; margin: 0 auto 12px; color: var(--ink); }
+.titled .caps::before, .titled .caps::after { content: "✦"; display: inline-block; margin: 0 .9em; font-size: .7em; letter-spacing: 0; vertical-align: .15em; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(10px, 3vw, 28px); width: 100%; }
+@media (max-width: 560px) {
+  .hero { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .logo-wrap { grid-column: 1 / -1; grid-row: 1; }
+}
+.flank { position: relative; z-index: 1; margin: 0; justify-self: center; width: min(100%, 168px); padding: 6px; border: 1px solid var(--ink); background: var(--paper); box-shadow: 0 18px 30px -22px rgba(0, 0, 0, .55); }
+.flank img { display: block; width: 100%; max-width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 999px 999px 0 0; }
+.flank.l { transform: rotate(-4deg); }
+.flank.r { transform: rotate(4deg); margin-top: 48px; }
+@media (max-width: 560px) { .flank { width: min(100%, 140px); } .flank.r { margin-top: 24px; } }
+.logo-wrap { position: relative; display: grid; place-items: center; padding: 26px; }
+.logo-wrap .badge { position: relative; z-index: 1; }
+.glitter { position: absolute; left: -40%; top: -15%; width: 180%; height: 130%; pointer-events: none; }
+.spark { position: absolute; z-index: 2; width: 18px; height: 18px; fill: var(--ink); }
+.s1 { top: 6%; right: 4%; }
+.s2 { bottom: 12%; left: 2%; width: 12px; height: 12px; }
+.s3 { top: 26%; left: -4%; width: 9px; height: 9px; }
+.s4 { top: 0; right: 6%; width: 22px; height: 22px; }
+.s5 { bottom: 22%; left: 0; width: 12px; height: 12px; }
+@media (prefers-reduced-motion: no-preference) {
+  .spark { animation: twinkle 3.4s ease-in-out infinite; }
+  .s2, .s5 { animation-delay: 1.2s; }
+  .s3 { animation-delay: 2.2s; }
+  @keyframes twinkle { 0%, 100% { opacity: .3; transform: scale(.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(25deg); } }
+}
+.frame { position: relative; }
+
+.ticker { background: var(--ink); color: var(--paper); overflow: hidden; padding-block: 12px; }
+.ticker-track { display: flex; width: max-content; }
+.ticker span { font-family: var(--display); font-style: italic; font-size: 1.15rem; white-space: nowrap; padding-right: .5em; }
+.ticker b { font-family: var(--body); font-weight: 400; font-style: normal; font-size: .75em; margin: 0 .9em; vertical-align: .1em; }
+@media (prefers-reduced-motion: no-preference) {
+  .ticker-track { animation: tick 40s linear infinite; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+}
+
+.card { position: relative; padding: 26px 14px 20px; box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px var(--ink); }
+.card::before { content: "✦"; position: absolute; top: -.75em; left: 50%; transform: translateX(-50%); padding: 0 6px; background: var(--paper); font-size: .85rem; line-height: 1.4; }
+.cat-name::before { content: "✦"; margin-right: .7em; letter-spacing: 0; }
+.sign { font-family: var(--script); font-size: 2.3rem; line-height: 1; }
+.sign span { font-family: var(--body); font-size: .5em; vertical-align: .3em; margin-left: .2em; }
+.prepare h2 em, .book h2 em { font-style: italic; }
+
+/* Wide-screen layout */
+.badge { width: clamp(180px, 22vw, 280px); }
+.flank { width: min(100%, 290px); }
+.welcome .caps.wide { font-size: clamp(.82rem, .7rem + .3vw, 1rem); }
+.frame { max-width: 400px; }
+.hello p { max-width: 54ch; }
+.meet { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+.panel { max-width: 640px; }
+.cats { display: grid; gap: 0 56px; }
+.time { margin-top: 26px; display: grid; gap: 28px 56px; }
+@media (min-width: 900px) {
+  .cats:not(.one) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .time { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); align-items: start; }
+  .t-side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+  .t-side .picked { flex-direction: column; align-items: flex-start; }
+}
+@media (min-width: 1000px) {
+  .checks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .shot:first-child { grid-column: auto; aspect-ratio: 4 / 5; }
+  .shot:first-child img { object-position: center; }
+  .ticker span { font-size: 1.35rem; }
+}
+@media (max-width: 620px) { .meet { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .flank { width: min(100%, 150px); } }
+
+/* Social links */
+.lux-social { display: flex; justify-content: center; gap: 12px; margin-top: 4px; }
+.lux-social a { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .4); color: #FFFFFF; transition: background-color .2s, color .2s, border-color .2s; }
+.lux-social a:hover, .lux-social a:focus-visible { background: #FFFFFF; color: #0A0A0A; border-color: #FFFFFF; }
+.lux-social svg { width: 19px; height: 19px; }
+.socials { list-style: none; margin: 14px 0 22px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 36px; }
+.socials a { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; text-align: left; font-size: .88rem; }
+.socials a:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.socials svg { width: 22px; height: 22px; flex: none; }
+.socials small { display: block; font-size: .62rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+
+/* Meet Nel: black band, circular portrait left, introduction right */
+.meet.sec {
+  background: #0A0A0A; color: #EDE9E1; border-top: 1px solid rgba(255, 255, 255, .1);
+  padding-block: clamp(56px, 7vw, 100px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center;
+}
+.meet .frame { position: relative; margin: 0; width: 100%; max-width: 360px; justify-self: center; gap: 16px; }
+.meet .frame .mat { width: 100%; padding: 10px; border: 1px solid rgba(255, 255, 255, .85); border-radius: 50%; background: transparent; }
+.meet .frame img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: center; border-radius: 50%; }
+.meet .frame figcaption { color: rgba(255, 255, 255, .62); }
+.meet .hello { justify-items: start; text-align: left; gap: 16px; max-width: 580px; padding-left: clamp(24px, 4vw, 56px); border-left: 1px solid rgba(255, 255, 255, .16); }
+.meet .hello .script { color: #FFFFFF; font-size: clamp(3.2rem, 2.2rem + 3vw, 4.6rem); line-height: 1.12; padding-bottom: .05em; }
+.meet .hello .caps { color: #FFFFFF; letter-spacing: .34em; }
+.meet-rule { display: block; width: 64px; height: 1px; background: rgba(255, 255, 255, .6); }
+.meet .hello p { margin: 4px 0 0; max-width: 52ch; color: #E9E5DD; font-size: clamp(1.05rem, 1rem + .3vw, 1.22rem); line-height: 1.75; }
+.meet .sign { color: #FFFFFF; }
+.meet .btn { justify-self: start; margin-top: 6px; background: #FFFFFF; color: #0A0A0A; border-color: #FFFFFF; }
+.meet .btn:hover { background: transparent; color: #FFFFFF; }
+@media (max-width: 760px) {
+  .meet.sec { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .meet .frame { max-width: 280px; }
+  .meet .hello { justify-items: center; text-align: center; padding-left: 0; border-left: 0; margin: 0 auto; }
+  .meet .btn { justify-self: center; }
+}
+
+/* Hero: ivory (charcoal in dark mode), logo as the focal point, thin gold detailing */
+.lux {
+  position: relative; overflow: hidden; color: #F2F2F2;
+  background: radial-gradient(60% 85% at 50% 40%, rgba(255, 255, 255, .07), transparent 72%), var(--hero-bg);
+  padding-block: clamp(48px, 6vw, 84px) clamp(44px, 5.5vw, 76px);
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.lux::before, .lux::after { content: ""; position: absolute; left: clamp(16px, 4vw, 56px); right: clamp(16px, 4vw, 56px); height: 1px; background: linear-gradient(90deg, transparent, var(--hl) 20%, var(--hl) 80%, transparent); opacity: .55; }
+.lux::before { top: clamp(14px, 2vw, 24px); }
+.lux::after { bottom: clamp(14px, 2vw, 24px); }
+.lux-in { max-width: 880px; margin: 0 auto; display: grid; justify-items: center; text-align: center; gap: clamp(14px, 1.8vw, 20px); }
+.lux-eyebrow { display: flex; align-items: center; gap: 14px; font-size: .7rem; font-weight: 600; letter-spacing: .4em; text-transform: uppercase; color: var(--hl-text); }
+.lux-eyebrow span { width: 32px; height: 1px; background: var(--hl); }
+.lux-mark { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(12px, 3vw, 36px); width: 100%; }
+.lux-line { position: relative; height: 1px; background: linear-gradient(90deg, transparent, var(--hl)); }
+.lux-line:last-child { background: linear-gradient(90deg, var(--hl), transparent); }
+.lux-line::after { content: ""; position: absolute; top: 50%; right: -3px; width: 6px; height: 6px; background: var(--hl); transform: translateY(-50%) rotate(45deg); }
+.lux-line:last-child::after { right: auto; left: -3px; }
+.lux-logo { position: relative; display: grid; place-items: center; padding: 16px; }
+.lux-badge { position: relative; z-index: 1; width: clamp(168px, 19vw, 236px); aspect-ratio: 1; border-radius: 50%; background: var(--logo) center / cover; box-shadow: 0 0 0 1px var(--hl), 0 0 0 7px var(--hero-bg), 0 0 0 8px var(--hl-line), 0 34px 54px -30px rgba(0, 0, 0, .6); }
+.lux .glitter { --glitter: var(--hl); left: -30%; top: -18%; width: 160%; height: 136%; }
+.lux .spark { fill: var(--hl); }
+.lux h1 { margin: 4px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(2.1rem, 1.3rem + 3vw, 3.5rem); line-height: 1.06; letter-spacing: -.01em; text-wrap: balance; }
+.lux h1 em { font-style: italic; }
+.lux p { margin: 0; max-width: 50ch; color: rgba(255, 255, 255, .72); font-size: 1rem; text-wrap: pretty; }
+.lux-cta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 28px; margin-top: 6px; }
+.lux-btn { height: 52px; padding: 0 34px; border: 0; background: #FFFFFF; color: #0A0A0A; font-size: .74rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; box-shadow: inset 0 0 0 4px #FFFFFF, inset 0 0 0 5px #0A0A0A; transition: transform .2s var(--ease), box-shadow .2s; }
+.lux-btn:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 4px #FFFFFF, inset 0 0 0 5px #0A0A0A, 0 16px 28px -18px rgba(0, 0, 0, .7); }
+.lux-link { border: 0; border-bottom: 1px solid var(--hl); background: none; padding: 6px 0; font-size: .72rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: #FFFFFF; }
+.lux-link:hover { color: rgba(255, 255, 255, .7); }
+.lux-meta { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .6); }
+.lux-meta li + li::before { content: "✦"; color: var(--hl); margin: 0 16px; font-size: .8em; }
+@media (max-width: 560px) {
+  .lux-eyebrow { gap: 10px; font-size: .62rem; letter-spacing: .28em; }
+  .lux-eyebrow span { width: 16px; }
+  .lux-meta { flex-direction: column; align-items: center; }
+  .lux-meta li + li::before { display: none; }
+  .lux-cta { flex-direction: column; }
+}
+
+/* Prepare banner: always black and charcoal with champagne accents, in both themes */
+.prepare {
+  --champ: #FFFFFF; --champ-line: rgba(255, 255, 255, .3); --champ-faint: rgba(255, 255, 255, .14);
+  position: relative; isolation: isolate; overflow: hidden; color: #EDEDED;
+  background: radial-gradient(60% 70% at 50% 0%, rgba(255, 255, 255, .07), transparent 70%), linear-gradient(180deg, #0A0A0A 0%, #171717 55%, #0A0A0A 100%);
+  padding-block: clamp(80px, 10vw, 136px);
+}
+.prep-frame { position: absolute; inset: clamp(12px, 2vw, 26px); border: 1px solid var(--champ-line); pointer-events: none; z-index: -1; }
+.prep-frame::after { content: ""; position: absolute; inset: 6px; border: 1px solid var(--champ-faint); }
+.prep-mono { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -54%); font-family: var(--script); font-size: clamp(13rem, 32vw, 28rem); line-height: 1; color: var(--champ); opacity: .05; white-space: nowrap; pointer-events: none; z-index: -1; }
+.prepare .ps { fill: var(--champ); z-index: -1; }
+.q1 { top: 16%; left: 9%; width: 16px; height: 16px; }
+.q2 { top: 24%; right: 11%; width: 22px; height: 22px; animation-delay: .8s; }
+.q3 { bottom: 20%; left: 15%; width: 10px; height: 10px; animation-delay: 1.6s; }
+.q4 { bottom: 14%; right: 17%; width: 14px; height: 14px; animation-delay: 2.4s; }
+.q5 { top: 52%; left: 4%; width: 9px; height: 9px; animation-delay: 1.1s; }
+.q6 { top: 44%; right: 5%; width: 11px; height: 11px; animation-delay: 2s; }
+@media (max-width: 760px) { .q5, .q6 { display: none; } .q1 { top: 6%; left: 10%; } .q2 { top: 9%; right: 10%; } .q3 { bottom: 4%; } .q4 { bottom: 3%; } }
+
+.prep-head { display: grid; justify-items: center; gap: 18px; text-align: center; margin-bottom: clamp(44px, 6vw, 72px); }
+.prep-badge { width: 76px; height: 76px; border-radius: 50%; background: var(--logo) center / cover; box-shadow: 0 0 0 1px var(--champ), 0 0 0 6px #121212, 0 0 0 7px var(--champ-line); }
+.prep-eyebrow { display: flex; align-items: center; gap: 16px; color: var(--champ); font-size: .72rem; font-weight: 600; letter-spacing: .38em; text-transform: uppercase; }
+.braid { width: 14px; height: 30px; color: var(--champ); }
+.braid.flip { transform: scaleX(-1); }
+.prepare h2 { margin: 0; color: #FFFFFF; font-family: var(--display); font-weight: 400; font-size: clamp(2.3rem, 1.5rem + 3.2vw, 3.9rem); line-height: 1.05; text-wrap: balance; }
+.prepare h2 em { color: var(--champ); }
+.prepare .orn { color: var(--champ); margin: 0 auto; }
+
+.prepare .checks { list-style: none; margin: 0 auto; padding: 0; max-width: 1100px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, auto); grid-auto-flow: column; gap: 0; }
+.prepare .checks li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 16px; align-items: start; padding: 26px clamp(18px, 3vw, 40px); font-size: .95rem; font-weight: 400; letter-spacing: .01em; text-transform: none; line-height: 1.6; color: #DADADA; }
+.prepare .checks li:nth-child(odd) { border-bottom: 1px solid var(--champ-faint); }
+.prepare .checks li:nth-child(n+3) { border-left: 1px solid var(--champ-line); }
+.prepare .checks b { display: block; margin-bottom: 4px; color: var(--champ); font-size: .68rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; }
+.prepare .ck { width: 26px; height: 26px; margin-top: 2px; }
+@media (max-width: 760px) {
+  .prepare .checks { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-flow: row; max-width: 460px; }
+  .prepare .checks li, .prepare .checks li:nth-child(n+3) { border-left: 0; padding: 20px 4px; border-bottom: 1px solid var(--champ-faint); }
+  .prepare .checks li:last-child { border-bottom: 0; }
+}
+</style>
+
+<svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+  <symbol id="flourish" viewBox="0 0 240 24"><path d="M2 12H98M142 12H238" fill="none" stroke="currentColor" stroke-width="1"/><path d="M103 12c4-8 10-8 13 0M137 12c-4-8-10-8-13 0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M120 4l5 8-5 8-5-8z" fill="currentColor"/><circle cx="98" cy="12" r="1.8" fill="currentColor"/><circle cx="142" cy="12" r="1.8" fill="currentColor"/></symbol>
+  <symbol id="braid" viewBox="0 0 20 44"><g fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="8" cy="7" rx="4" ry="6.5" transform="rotate(-30 8 7)"/><ellipse cx="12" cy="15" rx="4" ry="6.5" transform="rotate(30 12 15)"/><ellipse cx="8" cy="23" rx="4" ry="6.5" transform="rotate(-30 8 23)"/><ellipse cx="12" cy="31" rx="4" ry="6.5" transform="rotate(30 12 31)"/><path d="M10 37.5v6"/></g></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/><path d="M7.5 12.5l3 3 6-7" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></symbol>
+  <symbol id="tt" viewBox="0 0 24 24"><path d="M14 3v11.2a3.8 3.8 0 1 1-3.8-3.8M14 3c.4 2.6 2.2 4.3 5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="sc" viewBox="0 0 24 24"><path d="M12 3.5c-3 0-5 2.2-5 5.2v2.1l-1.6.5c-.5.2-.4.8.1 1l1.4.5c-.5 1.6-1.7 2.9-3.2 3.4.2.6 1.2.9 2.3 1 .2.6.3 1.2.9 1.2.7 0 1.4-.4 2.6-.1 1 .3 1.6 1.2 2.5 1.2s1.5-.9 2.5-1.2c1.2-.3 1.9.1 2.6.1.6 0 .7-.6.9-1.2 1.1-.1 2.1-.4 2.3-1-1.5-.5-2.7-1.8-3.2-3.4l1.4-.5c.5-.2.6-.8.1-1l-1.6-.5V8.7c0-3-2-5.2-5-5.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></symbol>
+</svg>
+
+<div class="sheet">
+  <header class="lux" aria-labelledby="lux-title">
+    <div class="lux-in">
+      <div class="lux-eyebrow"><span></span>Hair studio · By appointment<span></span></div>
+      <div class="lux-mark">
+        <i class="lux-line" aria-hidden="true"></i>
+        <div class="lux-logo">
+          <canvas class="glitter" data-count="420" aria-hidden="true"></canvas>
+          <div class="lux-badge" role="img" aria-label="blessed by nel, hairstylist"></div>
+          <svg class="spark s1" aria-hidden="true"><use href="#spark"/></svg>
+          <svg class="spark s2" aria-hidden="true"><use href="#spark"/></svg>
+          <svg class="spark s3" aria-hidden="true"><use href="#spark"/></svg>
+        </div>
+        <i class="lux-line" aria-hidden="true"></i>
+      </div>
+      <h1 id="lux-title">Braids &amp; twists, <em>beautifully done.</em></h1>
+      <p>Welcome to blessed by nel. Knotless, boho, twists and Fulani styles, done with care and booked in a few taps.</p>
+      <div class="lux-cta"><button class="lux-btn" data-goto="book">Book an Appointment</button><button class="lux-link" data-goto="gallery">View the gallery</button></div>
+      <ul class="lux-meta"><li>Studio 4 · 1180 Grand Ave</li><li>Tue–Sat · 7 am–7 pm</li><li>$20 deposit to book</li></ul>
+      <div class="lux-social">
+        <a href="https://www.instagram.com/blessedbynel" target="_blank" rel="noopener" aria-label="blessedbynel on Instagram"><svg aria-hidden="true"><use href="#ig"/></svg></a>
+        <a href="https://www.tiktok.com/@nelidadepina" target="_blank" rel="noopener" aria-label="nelidadepina on TikTok"><svg aria-hidden="true"><use href="#tt"/></svg></a>
+        <a href="https://www.snapchat.com/add/nelidadepinaa" target="_blank" rel="noopener" aria-label="nelidadepinaa on Snapchat"><svg aria-hidden="true"><use href="#sc"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker-track">
+    <span>Knotless<b>✦</b>Boho<b>✦</b>Fulani<b>✦</b>Senegalese twists<b>✦</b>Passion twists<b>✦</b>Island twists<b>✦</b>Stitch braids<b>✦</b>Kids styles<b>✦</b></span>
+    <span>Knotless<b>✦</b>Boho<b>✦</b>Fulani<b>✦</b>Senegalese twists<b>✦</b>Passion twists<b>✦</b>Island twists<b>✦</b>Stitch braids<b>✦</b>Kids styles<b>✦</b></span>
+  </div></div>
+
+  <section class="sec meet" aria-labelledby="hello">
+    <figure class="frame"><div class="mat"><img src="{{face}}" width="720" height="720" decoding="async" alt="Nel, owner of blessedbynel, wearing black island twists with a middle part, a gold chain and a white halter top"></div><figcaption>Nel · Owner &amp; hairstylist</figcaption></figure>
+    <div class="hello">
+      <h2 class="script" id="hello">Hi, I'm Nel!</h2>
+      <div class="caps">Meet your hairstylist</div>
+      <span class="meet-rule" aria-hidden="true"></span>
+      <p>Every appointment is with me, from your first part to the last curl. I keep the book small so each install gets clean parts, even tension and the time it needs.</p>
+      <div class="sign">xo, Nel<span>♡</span></div>
+      <button class="btn" data-goto="book">Book with Nel</button>
+    </div>
+  </section>
+
+  <section class="sec band" aria-labelledby="policies-title">
+    <div class="titled"><svg class="orn" aria-hidden="true"><use href="#flourish"/></svg><div class="caps">All about my</div><h2 class="script" id="policies-title">Booking Policies</h2></div>
+    <div class="cards">
+      <div class="card"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="10" width="30" height="21" rx="2.5"/><path d="M5 16h30M10 25h7M27 25h3"/></svg><h3>Deposit</h3><p>A <b>$20 non-refundable</b> deposit is required to secure your appointment.</p></div>
+      <div class="card"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="21" r="13"/><path d="M20 13v8l5 4M16 5h8"/></svg><h3>Late fee</h3><p>A few minutes late is fine. <b>25–30 minutes late is a $10 fee.</b> Please let me know if you're running late.</p></div>
+      <div class="card"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 13h24a2 2 0 0 1 2 2v3H6v-3a2 2 0 0 1 2-2z"/><path d="M9 18v12M13 18v12M17 18v12M21 18v12M25 18v12M29 18v12"/></svg><h3>Hair</h3><p>I don't provide hair, so <b>please bring your own.</b> Having trouble finding it? Let me know.</p></div>
+      <div class="card"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="14" r="5"/><path d="M6 32c0-5 4-9 9-9s9 4 9 9"/><circle cx="28" cy="15" r="4"/><path d="M26 23.5c4.5-.5 8 3 8 8"/></svg><h3>Guests</h3><p>I prefer <b>no guests.</b> If you need to bring someone, please let me know in advance.</p></div>
+    </div>
+  </section>
+
+  <section class="sec prepare" aria-labelledby="prep-title">
+    <div class="prep-frame" aria-hidden="true"></div>
+    <div class="prep-mono" aria-hidden="true">bn</div>
+    <svg class="spark ps q1" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="spark ps q2" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="spark ps q3" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="spark ps q4" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="spark ps q5" aria-hidden="true"><use href="#spark"/></svg>
+    <svg class="spark ps q6" aria-hidden="true"><use href="#spark"/></svg>
+    <div class="prep-head">
+      <div class="prep-badge" aria-hidden="true"></div>
+      <div class="prep-eyebrow"><svg class="braid" aria-hidden="true"><use href="#braid"/></svg><span>Before you arrive</span><svg class="braid flip" aria-hidden="true"><use href="#braid"/></svg></div>
+      <h2 id="prep-title">Prepare for your <em>appointment</em></h2>
+      <svg class="orn" aria-hidden="true"><use href="#flourish"/></svg>
+    </div>
+    <ul class="checks">
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Deposit</b>Pay your $20 deposit to lock in your spot.</div></li>
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Running late</b>Send me a message if you're running behind.</div></li>
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Your hair</b>Bring your own hair, the right type and amount.</div></li>
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Wash day</b>Arrive with your hair washed. I don't wash hair.</div></li>
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Guests</b>Come solo unless we've talked about a guest.</div></li>
+      <li><svg class="ck" aria-hidden="true"><use href="#check"/></svg><div><b>Comfort</b>Dress comfortably. Long styles take a while.</div></li>
+    </ul>
+  </section>
+
+  <section class="sec" id="gallery" aria-labelledby="work-title" style="scroll-margin-top: 12px;">
+    <div class="titled"><svg class="orn" aria-hidden="true"><use href="#flourish"/></svg><div class="caps">Tap a look to book it</div><h2 class="script" id="work-title">Recent Work</h2></div>
+    <div class="grid">
+      <figure class="shot"><img src="{{p1}}" width="880" height="1100" decoding="async" alt="Back view of long boho knotless braids in natural black with full curly ends and neat square parts"><figcaption><span>Boho knotless</span><button data-book="kn-b">Book</button></figcaption></figure>
+      <figure class="shot"><img src="{{p2}}" width="880" height="1100" decoding="async" alt="Fulani braids with a curved cornrow pattern at the front and curly boho braids falling past the shoulders"><figcaption><span>Fulani boho</span><button data-book="fu" data-addons="curls">Book</button></figcaption></figure>
+      <figure class="shot"><img src="{{p3}}" width="880" height="1100" decoding="async" alt="Honey blonde and brown boho knotless braids with loose curls, waist length"><figcaption><span>Honey blonde boho</span><button data-book="kn-b" data-addons="waist">Book</button></figcaption></figure>
+      <figure class="shot"><img src="{{p4}}" width="880" height="1100" decoding="async" alt="Medium knotless braids in black with curly ends, held up to show square parts"><figcaption><span>Medium, curly ends</span><button data-book="kn-m" data-addons="curls">Book</button></figcaption></figure>
+      <figure class="shot"><img src="{{p5}}" width="880" height="1100" decoding="async" alt="Brown Senegalese twists with curly ends and clean square parts"><figcaption><span>Senegalese twists</span><button data-book="tw-s" data-addons="curls">Book</button></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="sec book" id="book" aria-labelledby="book-title">
+    <div class="titled" style="margin-bottom: 0;"><svg class="orn" aria-hidden="true"><use href="#flourish"/></svg><div class="caps">Select appointment</div><h2 id="book-title">Book your <em>style</em></h2></div>
+    <div id="widget" aria-live="polite"></div>
+  </section>
+
+  <footer class="foot">
+    <svg class="orn" aria-hidden="true"><use href="#flourish"/></svg>
+    <div class="script">blessed by nel</div>
+    <ul class="socials">
+      <li><a href="https://www.instagram.com/blessedbynel" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg><span><small>Instagram</small>@blessedbynel</span></a></li>
+      <li><a href="https://www.tiktok.com/@nelidadepina" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#tt"/></svg><span><small>TikTok</small>@nelidadepina</span></a></li>
+      <li><a href="https://www.snapchat.com/add/nelidadepinaa" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#sc"/></svg><span><small>Snapchat</small>@nelidadepinaa</span></a></li>
+    </ul>
+    Demo booking page. Times are sample availability. Booking shows a confirmation but does not reserve an appointment or take payment.
+  </footer>
+</div>
+
+<script>
+const DEPOSIT = 20, OPEN = 7 * 60, CLOSE = 19 * 60, WEEKS = 8;
+const CATS = [
+  { id: "knotless", name: "Knotless", items: [
+    { id: "kn-s", name: "Small knotless", desc: "Mid-back length. Bring your own hair", min: 420, price: 300 },
+    { id: "kn-m", name: "Medium knotless", desc: "Mid-back length. Bring your own hair", min: 300, price: 230 },
+    { id: "kn-l", name: "Large knotless", desc: "Mid-back length. Bring your own hair", min: 210, price: 170 },
+    { id: "kn-b", name: "Boho knotless", desc: "Medium. Bring your own human curly hair", min: 360, price: 280 } ] },
+  { id: "twists", name: "Twists", items: [
+    { id: "tw-s", name: "Senegalese twists", desc: "Medium, mid-back length", min: 300, price: 210 },
+    { id: "tw-p", name: "Passion twists", desc: "Bra-strap length. Bring water-wave hair", min: 240, price: 190 },
+    { id: "tw-i", name: "Island twists", desc: "Bra-strap length. Bring human-hair blend", min: 360, price: 260 } ] },
+  { id: "cornrows", name: "Cornrows", items: [
+    { id: "st-6", name: "6 stitch braids", desc: "Straight back", min: 90, price: 85 },
+    { id: "st-10", name: "10 stitch braids", desc: "Straight back", min: 120, price: 110 },
+    { id: "fu", name: "Fulani braids", desc: "Center row, side braids, knotless in back", min: 270, price: 220 } ] },
+  { id: "kids", name: "Kids", items: [
+    { id: "k-kn", name: "Kids knotless (4–11)", desc: "Medium, shoulder length", min: 210, price: 140 },
+    { id: "k-cr", name: "Kids cornrows with beads", desc: "Beads included", min: 90, price: 70 } ] }
+];
+const ADDONS = [
+  { id: "waist", name: "Waist length", min: 45, price: 40 },
+  { id: "bum", name: "Bum length", min: 75, price: 60 },
+  { id: "beads", name: "Beads", min: 15, price: 15 },
+  { id: "curls", name: "Curly ends", min: 20, price: 20 }
+];
+const SVC = Object.fromEntries(CATS.flatMap(c => c.items.map(i => [i.id, i])));
+
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const week0 = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+const st = { cat: "all", svc: null, addons: [], week: 0, day: null, time: null, phase: "list", booked: null };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dur = m => { const h = Math.floor(m / 60), r = m % 60; return (h ? h + " hr" : "") + (h && r ? " " : "") + (r ? r + " min" : ""); };
+const clock = m => ((Math.floor(m / 60) + 11) % 12 + 1) + ":" + String(m % 60).padStart(2, "0") + (m >= 720 ? " pm" : " am");
+const hash = s => { let x = 7; for (const c of s) x = (x * 31 + c.charCodeAt(0)) | 0; return Math.abs(x); };
+const keyOf = d => d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+const dayAt = (w, i) => new Date(week0.getFullYear(), week0.getMonth(), week0.getDate() + w * 7 + i);
+const fmt = (d, o) => d.toLocaleDateString(undefined, o);
+const glide = () => matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+function totals() {
+  const s = SVC[st.svc], a = ADDONS.filter(x => st.addons.includes(x.id));
+  return { min: s.min + a.reduce((n, x) => n + x.min, 0), price: s.price + a.reduce((n, x) => n + x.price, 0) };
+}
+
+/* Sample availability: closed Sun/Mon, some days fully booked, long styles only start 7–10 am. */
+function slots(d) {
+  const t = totals(), k = keyOf(d), wd = d.getDay();
+  if (d <= today || wd === 0 || wd === 1 || hash(k) % 6 === 0) return [];
+  const long = t.min >= 240, step = long ? 60 : 30, out = [];
+  for (let m = OPEN; m + t.min <= CLOSE; m += step) {
+    if (long && m > 600) break;
+    out.push({ m, open: hash(k + ":" + m) % 3 !== 0 });
+  }
+  return out.some(s => s.open) ? out : [];
+}
+const openCount = d => slots(d).filter(s => s.open).length;
+function firstOpenDay(w) {
+  for (let i = 0; i < 7; i++) if (openCount(dayAt(w, i))) return i;
+  return null;
+}
+
+function viewList() {
+  const cats = CATS.filter(c => st.cat === "all" || c.id === st.cat);
+  return `<div class="chips">${[["all", "Show all"], ...CATS.map(c => [c.id, c.name])].map(([id, n]) => `<button class="chip" data-cat="${id}" aria-pressed="${st.cat === id}">${esc(n)}</button>`).join("")}</div>` +
+    `<div class="cats${cats.length === 1 ? " one" : ""}">` + cats.map(c => `<div class="cat"><h3 class="cat-name">${esc(c.name)}</h3>` + c.items.map(i => `
+      <div class="svc"><div><h3>${esc(i.name)}</h3><p>${esc(i.desc)}</p><div class="meta">${dur(i.min)} · $${i.price}</div></div>
+      <button class="btn" data-svc="${i.id}" aria-label="Book ${esc(i.name)}">Book</button></div>`).join("") + "</div>").join("") + "</div>";
+}
+
+function viewTime() {
+  const s = SVC[st.svc], t = totals();
+  const days = [...Array(7)].map((_, i) => dayAt(st.week, i));
+  const counts = days.map(openCount), max = Math.max(1, ...counts);
+  if (st.day == null || !counts[st.day]) st.day = firstOpenDay(st.week);
+  let list;
+  if (st.day == null) {
+    list = `<div class="none">No openings for this style this week.${st.week < WEEKS - 1 ? '<button class="btn line" data-week="1">See next week</button>' : ""}</div>`;
+  } else {
+    const d = days[st.day], sl = slots(d);
+    list = `<div class="dayline"><b>${fmt(d, { weekday: "long", month: "long", day: "numeric" })}</b><span>${counts[st.day]} open · ${dur(t.min)} each</span></div>
+      <div class="slots">${sl.map(x => x.open
+        ? `<button class="slot open" data-time="${x.m}" title="${clock(x.m)} to ${clock(x.m + t.min)}">${clock(x.m)}</button>`
+        : `<button class="slot taken" disabled aria-label="${clock(x.m)}, taken">${clock(x.m)}</button>`).join("")}</div>`;
+  }
+  return `<div class="time"><div class="t-side">
+    <button class="back" data-list>← All services</button>
+    <div class="picked"><h3>${esc(s.name)}</h3><div class="meta">${dur(t.min)} · <b>$${t.price}</b> · $${DEPOSIT} deposit</div></div>
+    <span class="label">Add-ons</span>
+    <div class="addons">${ADDONS.map(a => `<button class="chip" data-add="${a.id}" aria-pressed="${st.addons.includes(a.id)}">${esc(a.name)} +$${a.price}</button>`).join("")}</div>
+    </div><div class="t-main">
+    <div class="calhead"><span class="month">${fmt(days[3], { month: "long", year: "numeric" })}</span>
+      <button class="nbtn" data-week="-1" aria-label="Previous week" ${st.week ? "" : "disabled"}>←</button>
+      <button class="nbtn" data-week="1" aria-label="Next week" ${st.week < WEEKS - 1 ? "" : "disabled"}>→</button></div>
+    <div class="strip">${days.map((d, i) => `<button class="day${+d === +today ? " today" : ""}" data-day="${i}" aria-pressed="${i === st.day}" ${counts[i] ? "" : "disabled"} aria-label="${fmt(d, { weekday: "long", month: "long", day: "numeric" })}${counts[i] ? ", " + counts[i] + " open" : ", unavailable"}" style="--o:${(.3 + .7 * counts[i] / max).toFixed(2)}">${fmt(d, { weekday: "short" })}<b>${d.getDate()}</b><i></i></button>`).join("")}</div>
+    ${list}
+    <div class="legend"><span><i></i>Open</span><span><i class="t"></i>Taken</span><span>Closed Sundays and Mondays</span></div>
+  </div></div>`;
+}
+
+function whenText() {
+  const d = dayAt(st.week, st.day), t = totals();
+  return { d, date: fmt(d, { weekday: "long", month: "long", day: "numeric" }), span: clock(st.time) + " to about " + clock(st.time + t.min) };
+}
+
+function viewForm() {
+  const w = whenText(), t = totals();
+  return `<div class="panel"><form class="form" id="form" novalidate>
+    <div class="ctop"><div class="when"><small>${esc(SVC[st.svc].name)}${st.addons.length ? " + " + st.addons.length + " add-on" + (st.addons.length > 1 ? "s" : "") : ""}</small>
+      <strong>${w.date}</strong><em>${w.span}</em></div>
+      <button type="button" class="x" data-back aria-label="Back to times">×</button></div>
+    <div class="fields">
+      <div class="two">
+        <div class="field" id="f-name"><label for="in-name">Your name</label><input id="in-name" autocomplete="name"><span class="err"></span></div>
+        <div class="field" id="f-phone"><label for="in-phone">Phone</label><input id="in-phone" type="tel" autocomplete="tel"><span class="err"></span></div>
+      </div>
+      <div class="field" id="f-email"><label for="in-email">Email</label><input id="in-email" type="email" autocomplete="email"><span class="err"></span></div>
+      <div class="field"><label for="in-note">Inspiration or notes <span>(optional)</span></label><textarea id="in-note" rows="2" placeholder="Part style, color mix, a photo link"></textarea></div>
+      <label class="agree"><input type="checkbox" id="in-agree"><span>I'll bring my own hair, arrive with my hair washed, and I've read the policies, including the $20 non-refundable deposit.</span></label>
+      <span class="err" id="agree-err"></span>
+      <div class="sum"><span>Total $${t.price} · $${t.price - DEPOSIT} due at appointment</span><b>$${DEPOSIT} today</b></div>
+    </div>
+    <div class="acts"><button type="button" class="btn line" data-back>Back</button><button class="btn" type="submit">Pay deposit &amp; book</button></div>
+  </form></div>`;
+}
+
+function viewDone() {
+  const w = whenText(), b = st.booked;
+  return `<div class="panel ticket">
+    <div class="stub"><small>${fmt(w.d, { month: "short" }).toUpperCase()}</small><strong>${w.d.getDate()}</strong><small>${fmt(w.d, { weekday: "short" }).toUpperCase()}</small></div>
+    <div class="tbody">
+      <svg class="press" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width=".8"/><text x="50" y="55" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="12" letter-spacing="3" fill="currentColor">BOOKED</text></svg>
+      <h3>See you soon, ${esc(b.name.split(" ")[0])}!</h3>
+      <p><b>${esc(SVC[st.svc].name)}</b> on ${w.date}, ${w.span}.</p>
+      <p>Confirmation <span class="code">${b.code}</span> would go to <b>${esc(b.email)}</b>.</p>
+      <div class="acts"><button class="btn" data-again>Book another</button><button class="btn line" data-back>Change time</button></div>
+    </div></div>`;
+}
+
+function render() {
+  $("#widget").innerHTML = { list: viewList, time: viewTime, form: viewForm, done: viewDone }[st.phase]();
+  if (st.phase === "form") $("#in-name").focus();
+}
+const toBook = () => $("#book").scrollIntoView({ behavior: glide(), block: "start" });
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const d = b.dataset;
+  if (d.goto) toBook();
+  else if (d.book) { Object.assign(st, { svc: d.book, addons: d.addons ? d.addons.split(",") : [], week: 0, day: null, time: null, phase: "time", booked: null }); render(); toBook(); }
+  else if (d.cat) { st.cat = d.cat; render(); }
+  else if (d.svc) { Object.assign(st, { svc: d.svc, addons: [], week: 0, day: null, time: null, phase: "time" }); render(); toBook(); }
+  else if ("list" in d) { st.phase = "list"; render(); }
+  else if (d.add) {
+    const on = !st.addons.includes(d.add), len = ["waist", "bum"];
+    st.addons = st.addons.filter(x => x !== d.add && !(on && len.includes(d.add) && len.includes(x)));
+    if (on) st.addons.push(d.add);
+    render();
+  }
+  else if (d.week) { st.week = Math.max(0, Math.min(WEEKS - 1, st.week + +d.week)); st.day = null; render(); }
+  else if (d.day) { st.day = +d.day; render(); }
+  else if (d.time) { st.time = +d.time; st.phase = "form"; render(); }
+  else if ("back" in d) { st.phase = "time"; st.booked = null; render(); }
+  else if ("again" in d) { Object.assign(st, { svc: null, addons: [], week: 0, day: null, time: null, phase: "list", booked: null }); render(); toBook(); }
+});
+
+document.addEventListener("submit", e => {
+  e.preventDefault();
+  const v = id => $("#in-" + id).value.trim();
+  const errs = {
+    name: v("name") ? "" : "Add your name so I know who to expect.",
+    phone: v("phone").replace(/\D/g, "").length >= 10 ? "" : "Enter a 10-digit phone number for reminders.",
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v("email")) ? "" : "That email doesn't look complete.",
+  };
+  for (const k in errs) { const f = $("#f-" + k); f.classList.toggle("bad", !!errs[k]); f.querySelector(".err").textContent = errs[k]; }
+  $("#agree-err").textContent = $("#in-agree").checked ? "" : "Check the box to confirm you've read the policies.";
+  const first = Object.keys(errs).find(k => errs[k]) || (!$("#in-agree").checked && "agree");
+  if (first) {
+    const p = $(".panel"); p.classList.remove("shake"); void p.offsetWidth; p.classList.add("shake");
+    $("#in-" + first).focus(); return;
+  }
+  st.booked = { name: v("name"), email: v("email"), code: "BBN-" + (hash(v("email") + st.week + st.day + st.time) % 9000 + 1000) };
+  st.phase = "done"; render();
+});
+
+render();
+
+/* Glitter dust behind the logo: seeded, so it looks the same on every visit; redrawn on resize and theme change. */
+function glitter() {
+  const ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#0A0A0A";
+  document.querySelectorAll(".glitter").forEach(cv => {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    if (!r.width) return;
+    cv.width = r.width * dpr; cv.height = r.height * dpr;
+    const g = cv.getContext("2d"); g.scale(dpr, dpr); g.fillStyle = getComputedStyle(cv).getPropertyValue("--glitter").trim() || ink;
+    let seed = 20240607; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const cx = r.width / 2, cy = r.height / 2, rx = r.width * .44, ry = r.height * .42;
+    const count = +cv.dataset.count || 1100;
+    for (let i = 0; i < count; i++) {
+      const a = rnd() * Math.PI * 2, d = .35 + .65 * Math.sqrt(rnd());
+      const sweep = Math.sin(a * 2 + .6) * .18;
+      const x = cx + Math.cos(a) * rx * d, y = cy + Math.sin(a) * ry * d * (.75 + sweep);
+      g.globalAlpha = .1 + rnd() * .5 * (1 - d * .5);
+      g.beginPath(); g.arc(x, y, rnd() < .9 ? .5 + rnd() * 1.1 : 1.5 + rnd() * 1.4, 0, Math.PI * 2); g.fill();
+    }
+  });
+}
+glitter();
+let gt; addEventListener("resize", () => { clearTimeout(gt); gt = setTimeout(glitter, 150); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", glitter);
+new MutationObserver(glitter).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
